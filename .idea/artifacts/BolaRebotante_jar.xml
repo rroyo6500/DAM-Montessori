@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BolaRebotante:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BolaRebotante_jar</output-path>
+    <root id="archive" name="BolaRebotante.jar">
+      <element id="module-output" name="BolaRebotante" />
+    </root>
+  </artifact>
+</component>

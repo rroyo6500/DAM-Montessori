@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PongJSwing:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PongJSwing_jar</output-path>
+    <root id="archive" name="PongJSwing.jar">
+      <element id="module-output" name="PongJSwing" />
+    </root>
+  </artifact>
+</component>

@@ -1,124 +1,129 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Pong {
+public class Pong extends JPanel implements ActionListener, KeyListener {
 
-    private enum DirX {
-        L, R;
-        public DirX getOposite() {
-            return switch (this) {
-                case L -> DirX.R;
-                case R -> DirX.L;
-            };
-        }
-    }
-    private enum DirY {
-        U, D;
-        public DirY getOposite() {
-            return switch (this) {
-                case U -> DirY.D;
-                case D -> DirY.U;
-            };
-        }
+    private enum PlayerDirection {
+        UP, DOWN, NULL
     }
 
-    private static final int WIDTH = 1400;
+    private static final int WIDTH = 1000;
     private static final int HEIGHT = 600;
 
-    private static int actualColor = 0;
+    private final Timer timer;
 
-    private final Rectangle ball = new Rectangle(0, 0, 25, 25);
-    private DirX dirX = DirX.L;
-    private DirY dirY = DirY.U;
+    private final Rectangle bola = new Rectangle(WIDTH/2, HEIGHT/2, 25, 25);
+    private Color color = Color.WHITE;
+    private boolean bolaLeft = false;
+    private boolean bolaUp = false;
 
-    private final JPanel panel = new JPanel(){
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+    private final Rectangle player = new Rectangle(100, (HEIGHT/2)-50, 10, 100);
+    private PlayerDirection playerDirection = PlayerDirection.NULL;
 
-            // BG
-            g.setColor(Color.DARK_GRAY);
-            g.fillRect(0, 0, Pong.WIDTH, Pong.HEIGHT);
-
-            // Logica
-
-            if (ball.x <= 0 || (ball.x+ball.width) >= Pong.WIDTH) {
-                dirX = dirX.getOposite();
-                ball.setSize(ball.width + 10, ball.height + 10);
-                if (ball.x <= 0) {
-                    ball.setLocation(0, ball.y);
-                } else if ((ball.x+ball.width) >= Pong.WIDTH) {
-                    ball.setLocation(Pong.WIDTH-ball.width, ball.y);
-                }
-                actualColor = (actualColor + 1) % 7;
-            }
-            if (ball.y <= 0 || (ball.y+ball.height) >= Pong.HEIGHT) {
-                dirY = dirY.getOposite();
-                ball.setSize(ball.width + 10, ball.height + 10);
-                if (ball.y <= 0) {
-                    ball.setLocation(ball.x, 0);
-                } else if ((ball.y+ball.height) >= Pong.HEIGHT) {
-                    ball.setLocation(ball.x, Pong.HEIGHT-ball.height);
-                }
-                actualColor = (actualColor + 1) % 7;
-            }
-
-            ball.setLocation(
-                    switch (dirX) {
-                        case L -> ball.x - 10;
-                        case R -> ball.x + 10;
-                    },
-                    switch (dirY) {
-                        case U -> ball.y - 10;
-                        case D -> ball.y + 10;
-                    }
-            );
-
-            // Dibujado
-
-            g.setColor(switch (actualColor) {
-                case 0 -> Color.RED;
-                case 1 -> Color.BLUE;
-                case 2 -> Color.MAGENTA;
-                case 3 -> Color.ORANGE;
-                case 4 -> Color.CYAN;
-                case 5 -> Color.YELLOW;
-                case 6 -> Color.BLACK;
-                default -> Color.WHITE;
-            });
-            g.fillOval(ball.x, ball.y, ball.width, ball.height);
-        }
-    };
-
-    public Pong() {
+    public Pong () {
         JFrame frame = new JFrame("Pong");
-        frame.setSize(WIDTH, HEIGHT);
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        frame.setContentPane(panel);
-        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame.setContentPane(this);
+        frame.pack();
+        frame.addKeyListener(this);
+
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
-        setTimer();
-
         frame.setVisible(true);
+
+        timer = new Timer(30, this);
+        timer.start();
     }
 
-    private void setTimer() {
-        Timer t = new java.util.Timer();
-        t.schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        panel.repaint();
-                    }
-                },
-                0, 1000/30
-        );
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
+        //Bola
+        if (bola.x <= 0 || (bola.x+bola.width) >= WIDTH || bola.intersects(player) ||
+                bola.y <= 0 || (bola.y+bola.height) >= HEIGHT
+        ) {
+            if (bola.x <= 0 || bola.intersects(player)) bolaLeft = false;
+            else if ((bola.x+bola.width) >= WIDTH) {
+                bolaLeft = true;
+                bola.x = WIDTH-bola.width;
+            }
+
+            if (bola.y <= 0) bolaUp = false;
+            else if ((bola.y+bola.height) >= HEIGHT) {
+                bolaUp = true;
+                bola.y = HEIGHT-bola.height;
+            }
+
+            int r = (int) (Math.random() * 256);
+            int g = (int) (Math.random() * 256);
+            int b = (int) (Math.random() * 256);
+            color = new Color(r, g, b);
+        }
+
+        if (bolaLeft) bola.x -= 5;
+        else bola.x += 5;
+
+        if (bolaUp) bola.y -= 5;
+        else bola.y += 5;
+
+        // player
+
+        if (player.y <= 0) {
+            playerDirection = PlayerDirection.NULL;
+            player.y = 5;
+        } else if ((player.y+player.height) >= HEIGHT) {
+            playerDirection = PlayerDirection.NULL;
+            player.y = (HEIGHT-(player.height))-5;
+        }
+
+        player.y += switch (playerDirection) {
+            case NULL -> 0;
+            case UP -> -5;
+            case DOWN -> 5;
+        };
+
+        repaint();
     }
 
 
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+
+        g.setColor(color);
+        g.fillOval(bola.x, bola.y, bola.width, bola.height);
+
+        g.setColor(Color.WHITE);
+        g.fillRect(player.x, player.y, player.width, player.height);
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_W)
+            playerDirection = PlayerDirection.UP;
+        else if (e.getKeyCode() == KeyEvent.VK_S)
+            playerDirection = PlayerDirection.DOWN;
+        else playerDirection = PlayerDirection.NULL;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }
