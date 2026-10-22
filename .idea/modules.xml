@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Acceso_A_Datos/Acceso_A_Datos.iml" filepath="$PROJECT_DIR$/Acceso_A_Datos/Acceso_A_Datos.iml" />
       <module fileurl="file://$PROJECT_DIR$/DAM-Montessori.iml" filepath="$PROJECT_DIR$/DAM-Montessori.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Acceso_A_Datos/Unidad1/PR1-TiendaJuegosMesaRol/PR1-TiendaJuegosMesaRol.iml" filepath="$PROJECT_DIR$/Acceso_A_Datos/Unidad1/PR1-TiendaJuegosMesaRol/PR1-TiendaJuegosMesaRol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Acceso_A_Datos/Unidad1/Unidad1.iml" filepath="$PROJECT_DIR$/Acceso_A_Datos/Unidad1/Unidad1.iml" />
     </modules>
   </component>
 </project>
