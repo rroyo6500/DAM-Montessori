@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DAM-Montessori.iml" filepath="$PROJECT_DIR$/DAM-Montessori.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PSP/PSP.iml" filepath="$PROJECT_DIR$/PSP/PSP.iml" />
     </modules>
   </component>
 </project>
