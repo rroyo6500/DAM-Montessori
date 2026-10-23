@@ -7,7 +7,6 @@ public class Main {
     static void main() throws IOException {
         Server server = new Server();
         server.init();
-
     }
 
 }

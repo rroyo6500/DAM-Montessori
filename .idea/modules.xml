@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DAM-Montessori.iml" filepath="$PROJECT_DIR$/DAM-Montessori.iml" />
       <module fileurl="file://$PROJECT_DIR$/PSP/PSP.iml" filepath="$PROJECT_DIR$/PSP/PSP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Desarrollo_De_Interfaces/tema_02/Pong/PongJGE/PongJGE.iml" filepath="$PROJECT_DIR$/Desarrollo_De_Interfaces/tema_02/Pong/PongJGE/PongJGE.iml" />
       <module fileurl="file://$PROJECT_DIR$/PSP/Unidad1/Unidad1.iml" filepath="$PROJECT_DIR$/PSP/Unidad1/Unidad1.iml" />
     </modules>
   </component>
