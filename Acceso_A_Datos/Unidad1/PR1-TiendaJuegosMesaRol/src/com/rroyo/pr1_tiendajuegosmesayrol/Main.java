@@ -1,11 +1,12 @@
 package com.rroyo.pr1_tiendajuegosmesayrol;
 
-import com.rroyo.pr1_tiendajuegosmesayrol.gui.windows.Dashboard;
+import com.rroyo.pr1_tiendajuegosmesayrol.app.gui.Window;
+import com.rroyo.pr1_tiendajuegosmesayrol.util.Const;
 
 public class Main {
 
     public static void main(String[] args) {
-        new Dashboard();
+        Const.window = new Window();
     }
 
 }
