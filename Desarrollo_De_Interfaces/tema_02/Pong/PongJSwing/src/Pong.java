@@ -21,8 +21,10 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private boolean bolaLeft = false;
     private boolean bolaUp = false;
 
-    private final Rectangle player = new Rectangle(100, (HEIGHT/2)-50, 10, 100);
-    private PlayerDirection playerDirection = PlayerDirection.NULL;
+    private final Rectangle player1 = new Rectangle(100, (HEIGHT/2)-50, 10, 100);
+    private final Rectangle player2 = new Rectangle(900, (HEIGHT/2)-50, 10, 100);
+    private PlayerDirection player1Direction = PlayerDirection.NULL;
+    private PlayerDirection player2Direction = PlayerDirection.NULL;
 
     public Pong () {
         JFrame frame = new JFrame("Pong");
@@ -45,13 +47,14 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
 
         //Bola
-        if (bola.x <= 0 || (bola.x+bola.width) >= WIDTH || bola.intersects(player) ||
-                bola.y <= 0 || (bola.y+bola.height) >= HEIGHT
+        if (bola.x <= 0 || (bola.x+bola.width) >= WIDTH || bola.intersects(player1) ||
+                bola.y <= 0 || (bola.y+bola.height) >= HEIGHT || bola.intersects(player2)
         ) {
-            if (bola.x <= 0 || bola.intersects(player)) bolaLeft = false;
-            else if ((bola.x+bola.width) >= WIDTH) {
+            if (bola.x <= 0 || bola.intersects(player1)) bolaLeft = false;
+            else if ((bola.x+bola.width) >= WIDTH || bola.intersects(player2)) {
                 bolaLeft = true;
-                bola.x = WIDTH-bola.width;
+                if (bola.intersects(player2)) bola.x = player2.x-bola.width;
+                else bola.x = WIDTH-bola.width;
             }
 
             if (bola.y <= 0) bolaUp = false;
@@ -72,25 +75,34 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         if (bolaUp) bola.y -= 5;
         else bola.y += 5;
 
-        // player
+        // player1
 
-        if (player.y <= 0) {
-            playerDirection = PlayerDirection.NULL;
-            player.y = 5;
-        } else if ((player.y+player.height) >= HEIGHT) {
-            playerDirection = PlayerDirection.NULL;
-            player.y = (HEIGHT-(player.height))-5;
-        }
+        PlayerControls(player1, 1);
 
-        player.y += switch (playerDirection) {
-            case NULL -> 0;
-            case UP -> -5;
-            case DOWN -> 5;
-        };
+        // player2
+
+        PlayerControls(player2, 2);
 
         repaint();
     }
 
+    private void PlayerControls(Rectangle player, int playerID) {
+        if (player.y <= 0) {
+            if (playerID == 1) player1Direction = PlayerDirection.NULL;
+            if (playerID == 2) player2Direction = PlayerDirection.NULL;
+            player.y = 5;
+        } else if ((player.y + player.height) >= HEIGHT) {
+            if (playerID == 1) player1Direction = PlayerDirection.NULL;
+            if (playerID == 2) player2Direction = PlayerDirection.NULL;
+            player.y = (HEIGHT-(player.height))-5;
+        }
+
+        player.y += switch (playerID == 1? player1Direction : player2Direction) {
+            case NULL -> 0;
+            case UP -> -5;
+            case DOWN -> 5;
+        };
+    }
 
 
     @Override
@@ -103,8 +115,13 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
         g.setColor(color);
         g.fillOval(bola.x, bola.y, bola.width, bola.height);
 
+        // player1
         g.setColor(Color.WHITE);
-        g.fillRect(player.x, player.y, player.width, player.height);
+        g.fillRect(player1.x, player1.y, player1.width, player1.height);
+
+        // player2
+        g.setColor(Color.WHITE);
+        g.fillRect(player2.x, player2.y, player2.width, player2.height);
 
     }
 
@@ -115,11 +132,17 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        // player1
         if (e.getKeyCode() == KeyEvent.VK_W)
-            playerDirection = PlayerDirection.UP;
+            player1Direction = PlayerDirection.UP;
         else if (e.getKeyCode() == KeyEvent.VK_S)
-            playerDirection = PlayerDirection.DOWN;
-        else playerDirection = PlayerDirection.NULL;
+            player1Direction = PlayerDirection.DOWN;
+
+        // player2
+        if (e.getKeyCode() == KeyEvent.VK_UP)
+            player2Direction = PlayerDirection.UP;
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN)
+            player2Direction = PlayerDirection.DOWN;
     }
 
     @Override
