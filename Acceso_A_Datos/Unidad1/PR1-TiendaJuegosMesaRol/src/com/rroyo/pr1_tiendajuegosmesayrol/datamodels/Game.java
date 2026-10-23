@@ -25,4 +25,9 @@ public class Game {
     public GameTypes getGameType() {
         return gameType;
     }
+
+    @Override
+    public String toString() {
+        return gameName + " | " + gameType;
+    }
 }

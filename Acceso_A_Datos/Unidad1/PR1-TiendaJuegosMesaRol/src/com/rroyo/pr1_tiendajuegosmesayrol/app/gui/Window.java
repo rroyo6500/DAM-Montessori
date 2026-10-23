@@ -9,11 +9,14 @@ public class Window {
     JFrame frame;
 
     private JPanel panel;
-    public JComboBox cbSavedGamesSelector;
+    public JComboBox<Game> cbSavedGamesSelector;
     public JTextField tfGameName;
     public JTextArea tfGameDescription;
     public JRadioButton rbTypeGameTable;
     public JRadioButton rbTypeGameRol;
+    public JButton bLoadGame;
+    public JButton bSave;
+    public JButton bSaveNew;
 
     public Window() {
         frame = new JFrame("Tienda de Juegos de mesa y Rol");
@@ -22,9 +25,27 @@ public class Window {
         frame.pack();
 
         setMenu();
+        setListeners();
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    private void setListeners() {
+        bLoadGame.addActionListener(e -> {
+            Game game = (Game) cbSavedGamesSelector.getSelectedItem();
+            assert game != null;
+            tfGameName.setText(game.getGameName());
+            tfGameDescription.setText(game.getDescription());
+            switch (game.getGameType()) {
+                case TABLE:
+                    rbTypeGameTable.setSelected(true);
+                    break;
+                case ROLE:
+                    rbTypeGameRol.setSelected(true);
+                    break;
+            }
+        });
     }
 
     private void setMenu() {
@@ -44,7 +65,7 @@ public class Window {
 
     public void setData(GameStore gameStoreData) {
         for (Game game : gameStoreData.getGameList()) {
-            
+            cbSavedGamesSelector.addItem(game);
         }
     }
 }

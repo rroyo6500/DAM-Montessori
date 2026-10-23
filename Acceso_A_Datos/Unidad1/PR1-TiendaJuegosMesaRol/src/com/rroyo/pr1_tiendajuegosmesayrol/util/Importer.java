@@ -18,7 +18,7 @@ public class Importer {
 
     public static GameStore getData(File file) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
+        DocumentBuilder builder;
 
         GameStore gameStore = new GameStore();
 
