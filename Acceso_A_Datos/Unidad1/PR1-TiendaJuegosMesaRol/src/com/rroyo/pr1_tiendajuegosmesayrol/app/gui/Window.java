@@ -6,7 +6,8 @@ import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 import javax.swing.*;
 
 public class Window {
-    JFrame frame;
+
+    private final JFrame frame;
 
     private JPanel panel;
     public JComboBox<Game> cbSavedGamesSelector;
