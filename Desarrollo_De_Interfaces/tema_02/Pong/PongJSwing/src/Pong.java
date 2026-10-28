@@ -14,10 +14,11 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 600;
 
+    private static final Font SCORE_FONT = new Font("Arial", Font.BOLD, 24);
+
     private final Timer timer;
 
     private final Rectangle bola = new Rectangle(WIDTH/2, HEIGHT/2, 25, 25);
-    private Color color = Color.WHITE;
     private boolean bolaLeft = false;
     private boolean bolaUp = false;
 
@@ -25,6 +26,8 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     private final Rectangle player2 = new Rectangle(900, (HEIGHT/2)-50, 10, 100);
     private PlayerDirection player1Direction = PlayerDirection.NULL;
     private PlayerDirection player2Direction = PlayerDirection.NULL;
+    private int p1Score = 0;
+    private int p2Score = 0;
 
     public Pong () {
         JFrame frame = new JFrame("Pong");
@@ -46,15 +49,20 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (p1Score >= 5 || p2Score >= 5) {
+            return;
+        }
+
         //Bola
-        if (bola.x <= 0 || (bola.x+bola.width) >= WIDTH || bola.intersects(player1) ||
-                bola.y <= 0 || (bola.y+bola.height) >= HEIGHT || bola.intersects(player2)
+        if (bola.intersects(player1) || bola.intersects(player2) ||
+                bola.y <= 0 || (bola.y+bola.height) >= HEIGHT
         ) {
-            if (bola.x <= 0 || bola.intersects(player1)) bolaLeft = false;
-            else if ((bola.x+bola.width) >= WIDTH || bola.intersects(player2)) {
+            if (bola.intersects(player1)) {
+                bolaLeft = false;
+            }
+            else if (bola.intersects(player2)) {
                 bolaLeft = true;
-                if (bola.intersects(player2)) bola.x = player2.x-bola.width;
-                else bola.x = WIDTH-bola.width;
+                bola.x = player2.x-bola.width;
             }
 
             if (bola.y <= 0) bolaUp = false;
@@ -62,11 +70,18 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
                 bolaUp = true;
                 bola.y = HEIGHT-bola.height;
             }
+        }
 
-            int r = (int) (Math.random() * 256);
-            int g = (int) (Math.random() * 256);
-            int b = (int) (Math.random() * 256);
-            color = new Color(r, g, b);
+        if (bola.x < 0) {
+            p2Score++;
+            bola.x = WIDTH/2;
+            bola.y = HEIGHT/2;
+        }
+
+        if (bola.x+bola.width >= WIDTH) {
+            p1Score++;
+            bola.x = WIDTH/2;
+            bola.y = HEIGHT/2;
         }
 
         if (bolaLeft) bola.x -= 5;
@@ -111,17 +126,26 @@ public class Pong extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.DARK_GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(getWidth()/2, 0, 1, getHeight());
 
-        g.setColor(color);
+        g.setFont(SCORE_FONT);
+        g.drawString(String.valueOf(p1Score), getWidth()/2-50, 50);
+        g.drawString(String.valueOf(p2Score), getWidth()/2+50, 50);
+
+        g.setColor(Color.WHITE);
         g.fillOval(bola.x, bola.y, bola.width, bola.height);
 
         // player1
-        g.setColor(Color.WHITE);
         g.fillRect(player1.x, player1.y, player1.width, player1.height);
 
         // player2
-        g.setColor(Color.WHITE);
         g.fillRect(player2.x, player2.y, player2.width, player2.height);
+
+        if (p1Score >= 5 || p2Score >= 5) {
+            g.setColor(Color.GREEN);
+            g.drawString((p1Score > p2Score? "Player 1" : "Player2") + " WIN!", (WIDTH/2)-75, HEIGHT/2);
+        }
 
     }
 

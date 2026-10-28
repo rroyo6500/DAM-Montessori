@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PongJGE:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PongJGE_jar</output-path>
+    <root id="archive" name="PongJGE.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Desarrollo_De_Interfaces/tema_02/Pong/PongJGE/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="PongJGE" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/rroyo/jge/javagameengine/0.6.0/javagameengine-0.6.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

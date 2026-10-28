@@ -67,14 +67,8 @@ class BallScript implements Script {
 
         if (wall != null) {
 
-            if (wall.getWallType() == WallType.WALL) {
-                ball.setVelocityX(0);
-                ball.setBallDirectionsX(ball.getBallDirectionsX().getOposite());
-            }
-            if (wall.getWallType() == WallType.FLOOR) {
-                ball.setVelocityY(0);
-                ball.setBallDirectionsY(ball.getBallDirectionsY().getOposite());
-            }
+            ball.setVelocityY(0);
+            ball.setBallDirectionsY(ball.getBallDirectionsY().getOposite());
 
         }
     }
