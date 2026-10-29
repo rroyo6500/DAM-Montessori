@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: rroyo.jge:javagameengine:0.6.0" type="java-imported" external-system-id="Maven">
+    <properties groupId="rroyo.jge" artifactId="javagameengine" version="0.6.0" baseVersion="0.6.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/rroyo/jge/javagameengine/0.6.0/javagameengine-0.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/rroyo/jge/javagameengine/0.6.0/javagameengine-0.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/rroyo/jge/javagameengine/0.6.0/javagameengine-0.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
