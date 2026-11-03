@@ -26,6 +26,8 @@ public class Window {
     public JButton bEdit;
     public JButton bRemove;
 
+    public final ButtonGroup typeSelectionGroup = new ButtonGroup();
+
     public Window() {
         frame = new JFrame("Tienda de Juegos");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -38,6 +40,8 @@ public class Window {
         bLoadGame.setActionCommand("button_load");
         bEdit.setActionCommand("button_edit");
         bRemove.setActionCommand("button_remove");
+
+        attachRoundButtonsToGroup();
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -58,4 +62,9 @@ public class Window {
         frame.setJMenuBar(bar);
     }
 
+    private void attachRoundButtonsToGroup() {
+        typeSelectionGroup.add(rbTypeGameTable);
+        typeSelectionGroup.add(rbTypeGameRol);
+        typeSelectionGroup.add(rbTypeGameVideogame);
+    }
 }

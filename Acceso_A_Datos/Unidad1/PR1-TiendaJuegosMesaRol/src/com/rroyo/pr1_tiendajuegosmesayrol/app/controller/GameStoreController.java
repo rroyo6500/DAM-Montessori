@@ -5,8 +5,8 @@ import com.rroyo.pr1_tiendajuegosmesayrol.app.model.GameStoreModel;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.Game;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 import com.rroyo.pr1_tiendajuegosmesayrol.enums.GameTypes;
+import com.rroyo.pr1_tiendajuegosmesayrol.enums.LogLevel;
 import com.rroyo.pr1_tiendajuegosmesayrol.util.Util;
-import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
@@ -67,9 +67,7 @@ public class GameStoreController implements ActionListener, WindowListener {
     }
     
     public void clearEntries() {
-        window.rbTypeGameTable.setSelected(false);
-        window.rbTypeGameRol.setSelected(false);
-        window.rbTypeGameVideogame.setSelected(false);
+        window.typeSelectionGroup.clearSelection();
         window.tfGameDescription.setText(null);
         window.tfGameName.setText(null);
         window.tfGameName.requestFocus();
@@ -117,9 +115,11 @@ public class GameStoreController implements ActionListener, WindowListener {
                         gameStoreModel.addGame(gameName, gameDescription, gameType, gameDate, gamePrice);
                         clearEntries();
                         setGameStoreData(gameStoreModel.getGameStore());
+                    } else {
+                        Util.log("No se pueden dejar campos vacíos", LogLevel.ERROR);
                     }
                 } catch (Exception ignored) {
-                    System.err.println("ERROR: Invalid data type in 'GamePrice'");
+                    Util.log("El precio del juego debe ser un número válido", LogLevel.ERROR);
                 }
             } break;
 
@@ -174,8 +174,8 @@ public class GameStoreController implements ActionListener, WindowListener {
                 if (opt == JFileChooser.APPROVE_OPTION) {
                     try {
                         gameStoreModel.importData(chooser.getSelectedFile());
-                    } catch (ParserConfigurationException | SAXException | IOException ex) {
-                        throw new RuntimeException(ex);
+                    } catch (Exception ignored) {
+                        Util.log("Error al importar el archivo", LogLevel.ERROR);
                     }
                 }
                 setGameStoreData(gameStoreModel.getGameStore());
@@ -191,8 +191,8 @@ public class GameStoreController implements ActionListener, WindowListener {
                         gameStoreModel.exportData(chooser.getSelectedFile());
                         lastExportedRoute = chooser.getSelectedFile();
                         window.cbSavedGamesSelector.removeAllItems();
-                    } catch (ParserConfigurationException | TransformerException | IOException ex) {
-                        throw new RuntimeException(ex);
+                    } catch (Exception ex) {
+                        Util.log("Error al exportar el archivo", LogLevel.ERROR);
                     }
                 }
             } break;

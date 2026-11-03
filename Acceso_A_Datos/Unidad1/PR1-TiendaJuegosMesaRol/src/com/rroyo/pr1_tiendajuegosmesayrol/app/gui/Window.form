@@ -257,11 +257,4 @@
       </grid>
     </children>
   </grid>
-  <buttonGroups>
-    <group name="typeSelectionGroup">
-      <member id="9c8da"/>
-      <member id="64eb5"/>
-      <member id="a6c93"/>
-    </group>
-  </buttonGroups>
 </form>

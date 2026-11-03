@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.Game;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 import com.rroyo.pr1_tiendajuegosmesayrol.enums.GameTypes;
+import com.rroyo.pr1_tiendajuegosmesayrol.enums.LogLevel;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -61,7 +62,7 @@ public class ImporterExporter {
                 price = Double.parseDouble(element.getElementsByTagName("GamePrice")
                         .item(0).getChildNodes().item(0).getNodeValue());
             } catch (Exception ignored) {
-                System.err.println("Error al leer la lista de Juegos. (" + gameName + ", " + gameDescription + ")");
+                Util.log("Error al leer la lista de Juegos. (" + gameName + ", " + gameDescription + ")", LogLevel.WARNING);
                 continue;
             }
 

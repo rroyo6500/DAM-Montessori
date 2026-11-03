@@ -8,14 +8,14 @@ import java.util.Date;
 public class Game {
 
     private String gameName;
-    private String Description;
+    private String description;
     private GameTypes gameType;
     private LocalDate gameDate;
     private double price;
 
     public Game(String gameName, String description, GameTypes gameType, LocalDate gameDate, double price) {
         this.gameName = gameName;
-        Description = description;
+        this.description = description;
         this.gameType = gameType;
         this.gameDate = gameDate;
         this.price = price;
@@ -26,7 +26,7 @@ public class Game {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public GameTypes getGameType() {
@@ -46,7 +46,7 @@ public class Game {
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public void setGameType(GameTypes gameType) {
