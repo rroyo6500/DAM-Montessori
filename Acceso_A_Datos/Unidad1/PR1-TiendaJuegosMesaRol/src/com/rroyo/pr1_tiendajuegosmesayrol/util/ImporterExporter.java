@@ -48,6 +48,7 @@ public class ImporterExporter {
             String gameName = "", gameDescription = "";
             GameTypes gameType;
             LocalDate gameDate;
+            double price;
             try {
                 gameName = element.getElementsByTagName("Name")
                         .item(0).getChildNodes().item(0).getNodeValue();
@@ -57,13 +58,15 @@ public class ImporterExporter {
                         .item(0).getChildNodes().item(0).getNodeValue());
                 gameDate = LocalDate.parse(element.getElementsByTagName("GameDate")
                         .item(0).getChildNodes().item(0).getNodeValue());
+                price = Double.parseDouble(element.getElementsByTagName("GamePrice")
+                        .item(0).getChildNodes().item(0).getNodeValue());
             } catch (Exception ignored) {
                 System.err.println("Error al leer la lista de Juegos. (" + gameName + ", " + gameDescription + ")");
                 continue;
             }
 
             gameStore.addGame(
-                    new Game(gameName, gameDescription, gameType, gameDate)
+                    new Game(gameName, gameDescription, gameType, gameDate, price)
             );
         }
 
@@ -134,6 +137,11 @@ public class ImporterExporter {
             gameData = document.createElement("GameDate");
             gameNode.appendChild(gameData);
             text = document.createTextNode(game.getGameDate().toString());
+            gameData.appendChild(text);
+
+            gameData = document.createElement("GamePrice");
+            gameNode.appendChild(gameData);
+            text = document.createTextNode(String.valueOf(game.getPrice()));
             gameData.appendChild(text);
         }
 

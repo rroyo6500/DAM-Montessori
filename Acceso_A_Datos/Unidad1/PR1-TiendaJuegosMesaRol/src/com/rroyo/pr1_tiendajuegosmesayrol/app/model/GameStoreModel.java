@@ -24,8 +24,8 @@ public class GameStoreModel {
         return gameStore;
     }
 
-    public void addGame(String gameName, String description, GameTypes gameType, LocalDate gameDate) {
-        Game game = new Game(gameName, description, gameType, gameDate);
+    public void addGame(String gameName, String description, GameTypes gameType, LocalDate gameDate, double price) {
+        Game game = new Game(gameName, description, gameType, gameDate, price);
         gameStore.addGame(game);
     }
 

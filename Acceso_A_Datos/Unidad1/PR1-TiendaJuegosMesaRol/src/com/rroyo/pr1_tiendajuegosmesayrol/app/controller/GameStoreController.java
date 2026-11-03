@@ -48,16 +48,21 @@ public class GameStoreController implements ActionListener {
 
     public boolean hasBlankEntries() {
         return window.tfGameName.getText().isBlank() || window.tfGameDescription.getText().isBlank() ||
-                (!window.rbTypeGameRol.isSelected() && !window.rbTypeGameTable.isSelected());
+                (!window.rbTypeGameRol.isSelected() &&
+                        !window.rbTypeGameTable.isSelected() &&
+                        !window.rbTypeGameVideogame.isSelected()) ||
+                window.dpDateSelector.getDate() == null || window.tfPrice.getText().isBlank();
     }
     
     public void clearEntries() {
         window.rbTypeGameTable.setSelected(false);
         window.rbTypeGameRol.setSelected(false);
+        window.rbTypeGameVideogame.setSelected(false);
         window.tfGameDescription.setText(null);
         window.tfGameName.setText(null);
         window.tfGameName.requestFocus();
         window.dpDateSelector.clear();
+        window.tfPrice.setText(null);
     }
 
     private void addActionListener(ActionListener actionListener) {
@@ -70,8 +75,10 @@ public class GameStoreController implements ActionListener {
     private GameTypes getGameType() {
         boolean tableType = window.rbTypeGameTable.isSelected();
         boolean roleType = window.rbTypeGameRol.isSelected();
+        boolean videogame = window.rbTypeGameVideogame.isSelected();
         if (tableType) return GameTypes.TABLE;
         if (roleType) return GameTypes.ROLE;
+        if (videogame) return GameTypes.VIDEOGAME;
         return null;
     }
 
@@ -81,15 +88,20 @@ public class GameStoreController implements ActionListener {
 
         switch (actionCommand) {
             case "button_save": {
-                String gameName = window.tfGameName.getText();
-                String gameDescription = window.tfGameDescription.getText();
-                GameTypes gameType = getGameType();
-                LocalDate gameDate = window.dpDateSelector.getDate();
+                try {
+                    String gameName = window.tfGameName.getText();
+                    String gameDescription = window.tfGameDescription.getText();
+                    GameTypes gameType = getGameType();
+                    LocalDate gameDate = window.dpDateSelector.getDate();
+                    double gamePrice = Double.parseDouble(window.tfPrice.getText());
 
-                if (!hasBlankEntries()) {
-                    gameStoreModel.addGame(gameName, gameDescription, gameType, gameDate);
-                    clearEntries();
-                    setGameStoreData(gameStoreModel.getGameStore());
+                    if (!hasBlankEntries()) {
+                        gameStoreModel.addGame(gameName, gameDescription, gameType, gameDate, gamePrice);
+                        clearEntries();
+                        setGameStoreData(gameStoreModel.getGameStore());
+                    }
+                } catch (Exception ignored) {
+                    System.err.println("ERROR: Invalid data type in 'GamePrice'");
                 }
             } break;
 
@@ -105,8 +117,12 @@ public class GameStoreController implements ActionListener {
                         case ROLE:
                             window.rbTypeGameRol.setSelected(true);
                             break;
+                        case VIDEOGAME:
+                            window.rbTypeGameVideogame.setSelected(true);
+                            break;
                     }
                     window.dpDateSelector.setDate(game.getGameDate());
+                    window.tfPrice.setText(String.valueOf(game.getPrice()));
                 }
             } break;
 
@@ -134,6 +150,7 @@ public class GameStoreController implements ActionListener {
                     try {
                         gameStoreModel.exportData(chooser.getSelectedFile());
                         lastExportedRoute = chooser.getSelectedFile();
+                        window.cbSavedGamesSelector.removeAllItems();
                     } catch (ParserConfigurationException | TransformerException | IOException ex) {
                         throw new RuntimeException(ex);
                     }

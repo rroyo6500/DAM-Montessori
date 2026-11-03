@@ -11,12 +11,14 @@ public class Game {
     private final String Description;
     private final GameTypes gameType;
     private final LocalDate gameDate;
+    private final double price;
 
-    public Game(String gameName, String description, GameTypes gameType, LocalDate gameDate) {
+    public Game(String gameName, String description, GameTypes gameType, LocalDate gameDate, double price) {
         this.gameName = gameName;
         Description = description;
         this.gameType = gameType;
         this.gameDate = gameDate;
+        this.price = price;
     }
 
     public String getGameName() {
@@ -33,6 +35,10 @@ public class Game {
 
     public LocalDate getGameDate() {
         return gameDate;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     @Override
