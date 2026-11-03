@@ -47,15 +47,15 @@ public class GameStoreController implements ActionListener, WindowListener {
     }
 
     private void loadConfiguration() throws IOException {
-        Properties configuracion = new Properties();
-        configuracion.load(new FileReader("game_store.conf"));
-        lastExportedRoute=new File(configuracion.getProperty("last_exported_route"));
+        Properties config = new Properties();
+        config.load(new FileReader("game_store.conf"));
+        lastExportedRoute=new File(config.getProperty("last_exported_route"));
     }
 
     private void saveConfiguration() throws IOException, NullPointerException {
-        Properties configuracion = new Properties();
-        configuracion.setProperty("last_exported_route",lastExportedRoute.getAbsolutePath());
-        configuracion.store(new PrintWriter("game_store.conf"),"GameStore configuration");
+        Properties config = new Properties();
+        config.setProperty("last_exported_route",lastExportedRoute.getAbsolutePath());
+        config.store(new PrintWriter("game_store.conf"),"GameStore configuration");
     }
 
     public boolean hasBlankEntries() {
@@ -82,6 +82,8 @@ public class GameStoreController implements ActionListener, WindowListener {
         window.exp.addActionListener(actionListener);
         window.bSave.addActionListener(actionListener);
         window.bLoadGame.addActionListener(actionListener);
+        window.bEdit.addActionListener(actionListener);
+        window.bRemove.addActionListener(actionListener);
     }
 
     public void addWindowListener(WindowListener windowListener) {
@@ -139,6 +141,28 @@ public class GameStoreController implements ActionListener, WindowListener {
                     }
                     window.dpDateSelector.setDate(game.getGameDate());
                     window.tfPrice.setText(String.valueOf(game.getPrice()));
+                }
+            } break;
+
+            case "button_edit": {
+                Game game = (Game) window.cbSavedGamesSelector.getSelectedItem();
+                if (game != null) {
+                    game.setGameName(window.tfGameName.getText());
+                    game.setDescription(window.tfGameDescription.getText());
+                    game.setGameType(getGameType());
+                    game.setGameDate(window.dpDateSelector.getDate());
+                    game.setPrice(Double.parseDouble(window.tfPrice.getText()));
+                    window.cbSavedGamesSelector.setSelectedItem(game);
+                    clearEntries();
+                }
+            } break;
+
+            case "button_remove": {
+                Game game = (Game) window.cbSavedGamesSelector.getSelectedItem();
+                if (game != null) {
+                    clearEntries();
+                    window.cbSavedGamesSelector.removeItem(game);
+                    gameStoreModel.getGameStore().removeGame(game);
                 }
             } break;
 

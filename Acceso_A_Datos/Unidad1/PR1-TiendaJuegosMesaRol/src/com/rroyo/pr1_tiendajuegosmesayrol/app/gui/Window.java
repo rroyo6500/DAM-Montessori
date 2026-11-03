@@ -23,6 +23,8 @@ public class Window {
     public DatePicker dpDateSelector;
     public JRadioButton rbTypeGameVideogame;
     public JTextField tfPrice;
+    public JButton bEdit;
+    public JButton bRemove;
 
     public Window() {
         frame = new JFrame("Tienda de Juegos");
@@ -34,6 +36,8 @@ public class Window {
 
         bSave.setActionCommand("button_save");
         bLoadGame.setActionCommand("button_load");
+        bEdit.setActionCommand("button_edit");
+        bRemove.setActionCommand("button_remove");
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

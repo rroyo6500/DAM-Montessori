@@ -14,6 +14,10 @@ public class GameStore {
         gameList.add(game);
     }
 
+    public void removeGame(Game game) {
+        gameList.remove(game);
+    }
+
     public List<Game> getGameList() {
         return gameList;
     }

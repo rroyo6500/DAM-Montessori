@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class Game {
 
-    private final String gameName;
-    private final String Description;
-    private final GameTypes gameType;
-    private final LocalDate gameDate;
-    private final double price;
+    private String gameName;
+    private String Description;
+    private GameTypes gameType;
+    private LocalDate gameDate;
+    private double price;
 
     public Game(String gameName, String description, GameTypes gameType, LocalDate gameDate, double price) {
         this.gameName = gameName;
@@ -39,6 +39,26 @@ public class Game {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public void setGameType(GameTypes gameType) {
+        this.gameType = gameType;
+    }
+
+    public void setGameDate(LocalDate gameDate) {
+        this.gameDate = gameDate;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
