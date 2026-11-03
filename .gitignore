@@ -28,3 +28,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Unity ###
+Multimedia/Unity/**/[Ll]ibrary/
+Multimedia/Unity/**/[Tt]emp/
+Multimedia/Unity/**/[Oo]bj/
+Multimedia/Unity/**/[Bb]uild/
+Multimedia/Unity/**/[Bb]uilds/
+Multimedia/Unity/**/[Ll]ogs/
+Multimedia/Unity/**/[Uu]ser[Ss]ettings/
+Multimedia/Unity/**/[Mm]emoryCaptures/
