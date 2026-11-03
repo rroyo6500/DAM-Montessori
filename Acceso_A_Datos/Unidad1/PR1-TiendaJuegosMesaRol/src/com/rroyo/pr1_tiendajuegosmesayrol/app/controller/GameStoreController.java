@@ -62,6 +62,7 @@ public class GameStoreController implements ActionListener {
         window.tfGameDescription.setText(null);
         window.tfGameName.setText(null);
         window.tfGameName.requestFocus();
+        window.dpDateSelector.clear();
     }
 
     private void addActionListener(ActionListener actionListener) {
@@ -110,6 +111,7 @@ public class GameStoreController implements ActionListener {
                             window.rbTypeGameRol.setSelected(true);
                             break;
                     }
+                    window.dpDateSelector.setDate(game.getGameDate());
                 }
             } break;
 
