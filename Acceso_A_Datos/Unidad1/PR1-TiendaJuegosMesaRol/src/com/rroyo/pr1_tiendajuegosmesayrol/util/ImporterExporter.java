@@ -26,17 +26,17 @@ public class ImporterExporter {
         builder = factory.newDocumentBuilder();
         Document document = builder.parse(file);
 
-        NodeList nodeList = document.getElementsByTagName("game_store");
+        NodeList nodeList = document.getElementsByTagName("Game");
         for (int i = 0; i < nodeList.getLength(); i++) {
             Element element = (Element) nodeList.item(i);
             String gameName = "", gameDescription = "";
             GameTypes gameType;
             try {
-                gameName = element.getElementsByTagName("game_name")
+                gameName = element.getElementsByTagName("Name")
                         .item(0).getChildNodes().item(0).getNodeValue();
-                gameDescription = element.getElementsByTagName("game_description")
+                gameDescription = element.getElementsByTagName("Description")
                         .item(0).getChildNodes().item(0).getNodeValue();
-                gameType = GameTypes.valueOf(element.getElementsByTagName("game_type")
+                gameType = GameTypes.valueOf(element.getElementsByTagName("GameType")
                         .item(0).getChildNodes().item(0).getNodeValue());
             } catch (Exception ignored) {
                 System.err.println("Error al leer la lista de Juegos. (" + gameName + ", " + gameDescription + ")");
