@@ -9,18 +9,13 @@ import com.rroyo.pr1_tiendajuegosmesayrol.util.Util;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class GameStoreController implements ActionListener {
 
@@ -117,12 +112,12 @@ public class GameStoreController implements ActionListener {
 
             case "menu_import": {
                 JFileChooser chooser = Util.createFileChooser(lastExportedRoute,
-                        "XML Files", "xml"
+                        "XML or JSON Files", "xml", "json"
                 );
                 int opt = chooser.showOpenDialog(null);
                 if (opt == JFileChooser.APPROVE_OPTION) {
                     try {
-                        gameStoreModel.importXML(chooser.getSelectedFile());
+                        gameStoreModel.importData(chooser.getSelectedFile());
                     } catch (ParserConfigurationException | SAXException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -132,14 +127,14 @@ public class GameStoreController implements ActionListener {
 
             case "menu_export": {
                 JFileChooser chooser = Util.createFileChooser(lastExportedRoute,
-                        "XML Files", "xml"
+                        "XML or JSON Files", "xml", "json"
                 );
                 int opt = chooser.showOpenDialog(null);
                 if (opt == JFileChooser.APPROVE_OPTION) {
                     try {
-                        gameStoreModel.exportXML(chooser.getSelectedFile());
+                        gameStoreModel.exportData(chooser.getSelectedFile());
                         lastExportedRoute = chooser.getSelectedFile();
-                    } catch (ParserConfigurationException | TransformerException ex) {
+                    } catch (ParserConfigurationException | TransformerException | IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

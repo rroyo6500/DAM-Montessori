@@ -11,7 +11,6 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class GameStoreModel {
 
@@ -34,12 +33,11 @@ public class GameStoreModel {
         gameStore.addGame(game);
     }
 
-    public void importXML(File file) throws ParserConfigurationException, IOException, SAXException {
+    public void importData(File file) throws ParserConfigurationException, IOException, SAXException {
         gameStore = ImporterExporter.importData(file);
-
     }
 
-    public void exportXML(File file) throws ParserConfigurationException, TransformerException {
+    public void exportData(File file) throws ParserConfigurationException, TransformerException, IOException {
         ImporterExporter.exportData(file, gameStore);
     }
 

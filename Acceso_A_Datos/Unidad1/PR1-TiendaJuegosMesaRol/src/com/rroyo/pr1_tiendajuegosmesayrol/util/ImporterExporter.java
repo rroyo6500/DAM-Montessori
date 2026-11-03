@@ -1,5 +1,6 @@
 package com.rroyo.pr1_tiendajuegosmesayrol.util;
 
+import com.google.gson.Gson;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.Game;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 import com.rroyo.pr1_tiendajuegosmesayrol.enums.GameTypes;
@@ -12,13 +13,27 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 
 public class ImporterExporter {
 
     public static GameStore importData(File file) throws ParserConfigurationException, IOException, SAXException {
+        String fileExtension = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+
+        GameStore gameStore = null;
+        switch (fileExtension) {
+            case "xml": {
+                gameStore = importXML(file);
+            } break;
+            case "json": {
+                gameStore = importJSON(file);
+            } break;
+        }
+        return gameStore;
+    }
+
+    public static GameStore importXML(File file) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
 
@@ -55,7 +70,35 @@ public class ImporterExporter {
         return gameStore;
     }
 
-    public static void exportData(File file, GameStore gameStore) throws ParserConfigurationException, TransformerException {
+    public static GameStore importJSON(File file) throws IOException {
+        Gson gson = new Gson();
+
+        FileReader fr = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fr);
+        StringBuilder json = new StringBuilder();
+        String line;
+        while ((line = reader.readLine())!=null){
+            json.append(line);
+        }
+        reader.close();
+
+        return gson.fromJson(json.toString(), GameStore.class);
+    }
+
+    public static void exportData(File file, GameStore gameStore) throws ParserConfigurationException, TransformerException, IOException {
+        String fileExtension = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+
+        switch (fileExtension) {
+            case "xml": {
+                exportXML(file, gameStore);
+            } break;
+            case "json": {
+                exportJSON(file, gameStore);
+            } break;
+        }
+    }
+
+    public static void exportXML(File file, GameStore gameStore) throws TransformerException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         DOMImplementation dom = builder.getDOMImplementation();
@@ -98,6 +141,16 @@ public class ImporterExporter {
         Result result = new StreamResult(file);
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.transform(source, result);
+    }
+
+    public static void exportJSON(File file, GameStore gameStore) throws IOException {
+        Gson gson = new Gson();
+
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        String json = gson.toJson(gameStore);
+        bw.write(json);
+        bw.close();
     }
 
 }

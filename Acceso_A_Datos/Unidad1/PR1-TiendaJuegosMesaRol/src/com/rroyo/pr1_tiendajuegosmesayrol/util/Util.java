@@ -6,7 +6,7 @@ import java.io.File;
 
 public class Util {
 
-    public static JFileChooser createFileChooser(File defaultRoute, String fileType, String fileExtension) {
+    public static JFileChooser createFileChooser(File defaultRoute, String fileType, String... fileExtension) {
         JFileChooser chooser = new JFileChooser();
         if (defaultRoute != null) {
             chooser.setCurrentDirectory(defaultRoute);
