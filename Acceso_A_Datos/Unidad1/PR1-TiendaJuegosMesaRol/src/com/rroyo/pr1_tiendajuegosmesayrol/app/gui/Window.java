@@ -1,5 +1,6 @@
 package com.rroyo.pr1_tiendajuegosmesayrol.app.gui;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.Game;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 
@@ -20,6 +21,7 @@ public class Window {
     public JRadioButton rbTypeGameRol;
     public JButton bLoadGame;
     public JButton bSave;
+    public DatePicker dpDateSelector;
 
     public Window() {
         frame = new JFrame("Tienda de Juegos de mesa y Rol");

@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class ImporterExporter {
 
@@ -31,6 +32,7 @@ public class ImporterExporter {
             Element element = (Element) nodeList.item(i);
             String gameName = "", gameDescription = "";
             GameTypes gameType;
+            LocalDate gameDate;
             try {
                 gameName = element.getElementsByTagName("Name")
                         .item(0).getChildNodes().item(0).getNodeValue();
@@ -38,13 +40,15 @@ public class ImporterExporter {
                         .item(0).getChildNodes().item(0).getNodeValue();
                 gameType = GameTypes.valueOf(element.getElementsByTagName("GameType")
                         .item(0).getChildNodes().item(0).getNodeValue());
+                gameDate = LocalDate.parse(element.getElementsByTagName("GameDate")
+                        .item(0).getChildNodes().item(0).getNodeValue());
             } catch (Exception ignored) {
                 System.err.println("Error al leer la lista de Juegos. (" + gameName + ", " + gameDescription + ")");
                 continue;
             }
 
             gameStore.addGame(
-                    new Game(gameName, gameDescription, gameType)
+                    new Game(gameName, gameDescription, gameType, gameDate)
             );
         }
 
@@ -82,6 +86,11 @@ public class ImporterExporter {
             gameData = document.createElement("GameType");
             gameNode.appendChild(gameData);
             text = document.createTextNode(game.getGameType().toString());
+            gameData.appendChild(text);
+
+            gameData = document.createElement("GameDate");
+            gameNode.appendChild(gameData);
+            text = document.createTextNode(game.getGameDate().toString());
             gameData.appendChild(text);
         }
 

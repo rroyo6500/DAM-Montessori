@@ -10,6 +10,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class GameStoreModel {
 
@@ -23,8 +25,8 @@ public class GameStoreModel {
         return gameStore;
     }
 
-    public void addGame(String gameName, String description, GameTypes gameType) {
-        Game game = new Game(gameName, description, gameType);
+    public void addGame(String gameName, String description, GameTypes gameType, LocalDate gameDate) {
+        Game game = new Game(gameName, description, gameType, gameDate);
         gameStore.addGame(game);
     }
 

@@ -19,6 +19,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class GameStoreController implements ActionListener {
 
@@ -86,9 +88,10 @@ public class GameStoreController implements ActionListener {
                 String gameName = window.tfGameName.getText();
                 String gameDescription = window.tfGameDescription.getText();
                 GameTypes gameType = getGameType();
+                LocalDate gameDate = window.dpDateSelector.getDate();
 
                 if (!hasBlankEntries()) {
-                    gameStoreModel.addGame(gameName, gameDescription, gameType);
+                    gameStoreModel.addGame(gameName, gameDescription, gameType, gameDate);
                     clearEntries();
                     setGameStoreData(gameStoreModel.getGameStore());
                 }

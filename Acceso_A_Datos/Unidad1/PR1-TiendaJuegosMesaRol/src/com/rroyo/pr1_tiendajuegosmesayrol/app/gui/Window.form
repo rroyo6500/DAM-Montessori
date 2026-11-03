@@ -17,6 +17,8 @@
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="top:4dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
+    <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:d:grow"/>
     <rowspec value="top:4dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
@@ -62,7 +64,7 @@
       </vspacer>
       <vspacer id="9b83b">
         <constraints>
-          <grid row="20" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="22" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
         </constraints>
       </vspacer>
@@ -150,7 +152,7 @@
       </scrollpane>
       <vspacer id="833d3">
         <constraints>
-          <grid row="16" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="18" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
         </constraints>
       </vspacer>
@@ -169,7 +171,7 @@
         <rowspec value="center:max(d;4px):noGrow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
-          <grid row="18" column="2" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="20" column="2" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms/>
         </constraints>
         <properties/>
@@ -186,6 +188,22 @@
           </component>
         </children>
       </grid>
+      <component id="a0b74" class="com.github.lgooddatepicker.components.DatePicker" binding="dpDateSelector">
+        <constraints>
+          <grid row="16" column="4" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="17f8a" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Fecha de Adicion a la tienda"/>
+        </properties>
+      </component>
     </children>
   </grid>
   <buttonGroups>
