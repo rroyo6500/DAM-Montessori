@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class Window {
 
-    private final JFrame frame;
+    public final JFrame frame;
 
     public JMenuItem exp;
     public JMenuItem imp;
@@ -25,8 +25,8 @@ public class Window {
     public JTextField tfPrice;
 
     public Window() {
-        frame = new JFrame("Tienda de Juegos de mesa y Rol");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame("Tienda de Juegos");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setContentPane(panel);
         frame.pack();
 

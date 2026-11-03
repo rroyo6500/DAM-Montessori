@@ -13,11 +13,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.*;
 import java.time.LocalDate;
+import java.util.Properties;
 
-public class GameStoreController implements ActionListener {
+public class GameStoreController implements ActionListener, WindowListener {
 
     private final GameStoreModel gameStoreModel;
     private final Window window;
@@ -34,6 +36,7 @@ public class GameStoreController implements ActionListener {
         }
         
         addActionListener(this);
+        addWindowListener(this);
     }
 
     public void setGameStoreData(GameStore gameStoreData) {
@@ -43,7 +46,16 @@ public class GameStoreController implements ActionListener {
         }
     }
 
-    private void loadConfiguration() {
+    private void loadConfiguration() throws IOException {
+        Properties configuracion = new Properties();
+        configuracion.load(new FileReader("game_store.conf"));
+        lastExportedRoute=new File(configuracion.getProperty("last_exported_route"));
+    }
+
+    private void saveConfiguration() throws IOException, NullPointerException {
+        Properties configuracion = new Properties();
+        configuracion.setProperty("last_exported_route",lastExportedRoute.getAbsolutePath());
+        configuracion.store(new PrintWriter("game_store.conf"),"GameStore configuration");
     }
 
     public boolean hasBlankEntries() {
@@ -70,6 +82,10 @@ public class GameStoreController implements ActionListener {
         window.exp.addActionListener(actionListener);
         window.bSave.addActionListener(actionListener);
         window.bLoadGame.addActionListener(actionListener);
+    }
+
+    public void addWindowListener(WindowListener windowListener) {
+        window.frame.addWindowListener(windowListener);
     }
     
     private GameTypes getGameType() {
@@ -160,4 +176,45 @@ public class GameStoreController implements ActionListener {
 
     }
 
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        int res = Util.confirmMessage("Deseas cerrar la ventana","Salir");
+        if (res ==JOptionPane.OK_OPTION) {
+            try {
+                saveConfiguration();
+            } catch (Exception ignored) {}
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

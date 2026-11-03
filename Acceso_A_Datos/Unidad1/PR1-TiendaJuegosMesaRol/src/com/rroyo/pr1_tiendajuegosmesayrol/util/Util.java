@@ -18,4 +18,8 @@ public class Util {
         return chooser;
     }
 
+    public static int confirmMessage(String message, String title) {
+        return JOptionPane.showConfirmDialog(null,message,
+                title,JOptionPane.YES_NO_OPTION);
+    }
 }
