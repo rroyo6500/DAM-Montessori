@@ -7,9 +7,65 @@ interface PlayerRepository {
     fun populate() {
         addNewPlayer(
             Player(
-                "Player1",
-                "Herrero",
-                "Red"
+                "Arturo",
+                "Caballero",
+                "Azul"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Elena",
+                "Maga",
+                "Rojo"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Marcos",
+                "Arquero",
+                "Verde"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Sofía",
+                "Curandera",
+                "Blanco"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Diego",
+                "Ladrón",
+                "Negro"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Lucía",
+                "Mercadera",
+                "Amarillo"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Hugo",
+                "Asesino",
+                "Negro"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Carmen",
+                "Alquimista",
+                "Morado"
+            )
+        )
+        addNewPlayer(
+            Player(
+                "Pablo",
+                "Domador",
+                "Naranja"
             )
         )
     }
