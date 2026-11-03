@@ -1,12 +1,16 @@
 package com.rroyo.pr1_tiendajuegosmesayrol.app.gui;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.Game;
-import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
 
 import javax.swing.*;
 
 public class Window {
-    JFrame frame;
+
+    public final JFrame frame;
+
+    public JMenuItem exp;
+    public JMenuItem imp;
 
     private JPanel panel;
     public JComboBox<Game> cbSavedGamesSelector;
@@ -16,46 +20,41 @@ public class Window {
     public JRadioButton rbTypeGameRol;
     public JButton bLoadGame;
     public JButton bSave;
-    public JButton bSaveNew;
+    public DatePicker dpDateSelector;
+    public JRadioButton rbTypeGameVideogame;
+    public JTextField tfPrice;
+    public JButton bEdit;
+    public JButton bRemove;
+
+    public final ButtonGroup typeSelectionGroup = new ButtonGroup();
 
     public Window() {
-        frame = new JFrame("Tienda de Juegos de mesa y Rol");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame = new JFrame("Tienda de Juegos");
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setContentPane(panel);
         frame.pack();
 
         setMenu();
-        setListeners();
+
+        bSave.setActionCommand("button_save");
+        bLoadGame.setActionCommand("button_load");
+        bEdit.setActionCommand("button_edit");
+        bRemove.setActionCommand("button_remove");
+
+        attachRoundButtonsToGroup();
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    private void setListeners() {
-        bLoadGame.addActionListener(e -> {
-            Game game = (Game) cbSavedGamesSelector.getSelectedItem();
-            assert game != null;
-            tfGameName.setText(game.getGameName());
-            tfGameDescription.setText(game.getDescription());
-            switch (game.getGameType()) {
-                case TABLE:
-                    rbTypeGameTable.setSelected(true);
-                    break;
-                case ROLE:
-                    rbTypeGameRol.setSelected(true);
-                    break;
-            }
-        });
-    }
-
     private void setMenu() {
         JMenuBar bar =  new JMenuBar();
         JMenu menu = new JMenu("File");
-        JMenuItem imp = new JMenuItem("Import");
-        JMenuItem exp = new JMenuItem("Export");
+        imp = new JMenuItem("Import");
+        exp = new JMenuItem("Export");
 
-        imp.setActionCommand("import");
-        exp.setActionCommand("export");
+        imp.setActionCommand("menu_import");
+        exp.setActionCommand("menu_export");
 
         menu.add(imp);
         menu.add(exp);
@@ -63,9 +62,9 @@ public class Window {
         frame.setJMenuBar(bar);
     }
 
-    public void setData(GameStore gameStoreData) {
-        for (Game game : gameStoreData.getGameList()) {
-            cbSavedGamesSelector.addItem(game);
-        }
+    private void attachRoundButtonsToGroup() {
+        typeSelectionGroup.add(rbTypeGameTable);
+        typeSelectionGroup.add(rbTypeGameRol);
+        typeSelectionGroup.add(rbTypeGameVideogame);
     }
 }

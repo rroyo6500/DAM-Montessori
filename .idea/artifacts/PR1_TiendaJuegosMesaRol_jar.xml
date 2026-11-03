@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PR1-TiendaJuegosMesaRol:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PR1_TiendaJuegosMesaRol_jar</output-path>
+    <root id="archive" name="PR1-TiendaJuegosMesaRol.jar">
+      <element id="module-output" name="PR1-TiendaJuegosMesaRol" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Acceso_A_Datos/libs/jgoodies-common-1.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Acceso_A_Datos/libs/jgoodies-forms-1.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Acceso_A_Datos/libs/LGoodDatePicker-10.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Acceso_A_Datos/libs/GSON/gson-2.15.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

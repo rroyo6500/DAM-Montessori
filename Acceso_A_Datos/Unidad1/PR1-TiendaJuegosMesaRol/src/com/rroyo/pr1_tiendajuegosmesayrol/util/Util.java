@@ -1,21 +1,32 @@
 package com.rroyo.pr1_tiendajuegosmesayrol.util;
 
-import com.rroyo.pr1_tiendajuegosmesayrol.datamodels.GameStore;
+import com.rroyo.pr1_tiendajuegosmesayrol.enums.LogLevel;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 public class Util {
 
-    // Importer
-
-    public static void importData() {
-        JFileChooser fileChooser = new JFileChooser();
-        int selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile == JFileChooser.APPROVE_OPTION) {
-            File importedFile = fileChooser.getSelectedFile();
-            Const.window.setData(Importer.getData(importedFile));
+    public static JFileChooser createFileChooser(File defaultRoute, String fileType, String... fileExtension) {
+        JFileChooser chooser = new JFileChooser();
+        if (defaultRoute != null) {
+            chooser.setCurrentDirectory(defaultRoute);
         }
+        if (fileExtension != null) {
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(fileType, fileExtension);
+            chooser.setFileFilter(filter);
+        }
+        return chooser;
     }
 
+    public static int confirmMessage(String message, String title) {
+        return JOptionPane.showConfirmDialog(null,message,
+                title,JOptionPane.YES_NO_OPTION);
+    }
+
+    public static void log(String message, LogLevel logLevel) {
+        System.err.println("[" + logLevel.toString() + "] " + message);
+        JOptionPane.showMessageDialog(null, message, logLevel.toString(), JOptionPane.ERROR_MESSAGE);
+    }
 }
